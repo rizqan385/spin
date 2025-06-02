@@ -37,7 +37,7 @@ fetch("hadiah.json")
 
         if (hadiah !== "Coba Lagi") {
           claimBtn.style.display = "inline-block";
-          claimBtn.href = `https://wa.me/6281234567890?text=Halo%2C%20saya%20telah%20menang%20${encodeURIComponent(
+          claimBtn.href = `https://wa.me/6289513270487?text=Halo%2C%20saya%20telah%20menang%20${encodeURIComponent(
             hadiah
           )}%20dari%20Spin%20Promo!`;
         } else {
