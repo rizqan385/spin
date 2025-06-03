@@ -45,17 +45,29 @@ function drawWheel() {
 }
 drawWheel();
 
-// Cek apakah user sudah spin sekali sebelumnya
-if(localStorage.getItem("hasSpun") === "true") {
+// Fungsi untuk set UI setelah spin dilakukan
+function disableSpinUI(prize) {
   spinBtn.disabled = true;
-  hasil.textContent = "Kamu sudah menggunakan kesempatan spinmu.";
-  claimBtn.style.display = "none";
+  if (prize === "Coba Lagi") {
+    hasil.textContent = "Maaf, kamu gagal 😢";
+    claimBtn.style.display = "none";
+  } else {
+    hasil.textContent = `Kamu sudah spin dan mendapat: ${prize}`;
+    claimBtn.href = `https://wa.me/6289513270487?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
+    claimBtn.style.display = "inline-block";
+  }
+}
+
+// Cek di localStorage apakah sudah spin sebelumnya
+const savedPrize = localStorage.getItem("spinPrize");
+if (savedPrize) {
+  disableSpinUI(savedPrize);
 }
 
 spinBtn.addEventListener("click", () => {
   if (isSpinning) return;
   isSpinning = true;
-  spinBtn.disabled = true; // Disable saat spin mulai
+  spinBtn.disabled = true;
   claimBtn.style.display = "none";
   hasil.textContent = "";
 
@@ -88,16 +100,10 @@ spinBtn.addEventListener("click", () => {
       const index = Math.floor(delta / anglePerSeg);
       const prize = segments[index];
 
-      if (prize === "Coba Lagi") {
-        hasil.textContent = "Maaf, kamu gagal 😢";
-        claimBtn.style.display = "none";
-      } else {
-        hasil.textContent = `Kamu mendapat: ${prize}`;
-        claimBtn.href = `https://wa.me/6289513270487?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
-        claimBtn.style.display = "inline-block";
-      }
+      // Simpan hasil spin di localStorage
+      localStorage.setItem("spinPrize", prize);
 
-      localStorage.setItem("hasSpun", "true"); // Simpan status sudah spin
+      disableSpinUI(prize);
     }
   }
 
