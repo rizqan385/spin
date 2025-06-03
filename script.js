@@ -85,7 +85,7 @@ if (prize === "Zonk") {
   claimBtn.style.display = "none";
 } else {
   hasil.textContent = `Kamu mendapat: ${prize}`;
-  claimBtn.href = `https://wa.me/6281234567890?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
+  claimBtn.href = `https://wa.me/6289513270487  ?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
   claimBtn.style.display = "inline-block";
 }
 
