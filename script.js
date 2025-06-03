@@ -8,7 +8,7 @@ const segments = [
   "Diskon 10%",
   "Diskon 20%",
   "Gratis Ongkir",
-  "Zonk",
+  "Coba Lagi",
   "Es Teh Gratis"
 ];
 
@@ -45,9 +45,17 @@ function drawWheel() {
 }
 drawWheel();
 
+// Cek apakah user sudah spin sekali sebelumnya
+if(localStorage.getItem("hasSpun") === "true") {
+  spinBtn.disabled = true;
+  hasil.textContent = "Kamu sudah menggunakan kesempatan spinmu.";
+  claimBtn.style.display = "none";
+}
+
 spinBtn.addEventListener("click", () => {
   if (isSpinning) return;
   isSpinning = true;
+  spinBtn.disabled = true; // Disable saat spin mulai
   claimBtn.style.display = "none";
   hasil.textContent = "";
 
@@ -80,15 +88,16 @@ spinBtn.addEventListener("click", () => {
       const index = Math.floor(delta / anglePerSeg);
       const prize = segments[index];
 
-if (prize === "Zonk") {
-  hasil.textContent = "Maaf, kamu gagal 😢";
-  claimBtn.style.display = "none";
-} else {
-  hasil.textContent = `Kamu mendapat: ${prize}`;
-  claimBtn.href = `https://wa.me/6289513270487  ?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
-  claimBtn.style.display = "inline-block";
-}
+      if (prize === "Coba Lagi") {
+        hasil.textContent = "Maaf, kamu gagal 😢";
+        claimBtn.style.display = "none";
+      } else {
+        hasil.textContent = `Kamu mendapat: ${prize}`;
+        claimBtn.href = `https://wa.me/6289513270487?text=Halo%2C%20saya%20mendapatkan%20${encodeURIComponent(prize)}%20dari%20Spin%20Promo`;
+        claimBtn.style.display = "inline-block";
+      }
 
+      localStorage.setItem("hasSpun", "true"); // Simpan status sudah spin
     }
   }
 
